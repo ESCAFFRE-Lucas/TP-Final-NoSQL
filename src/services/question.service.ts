@@ -1,10 +1,10 @@
 import { question, response, survey } from "$lib/server/db";
 import { deleteReponse } from "./response.service";
+import { getSurveyById } from "./survey.service";
 
 type Question = {
     intitule: string;
     type: string;
-    reponses: string | string[];
     goodAnswer: string| string[];
 }
 
@@ -37,10 +37,10 @@ export const getQuestionById = async (id: string) => {
     }
 }
 
-export const updateQuestion = async (intitule: string, questionData: Question) => {
+export const updateQuestion = async (id: string, questionData: Question) => {
     try {
-        return await question.findOneAndUpdate({
-            intitule
+        return await question.updateOne({
+            _id: id
         }, questionData);
     } catch (error) {
         console.error('Erreur lors de la mise à jour de la question :', error);
@@ -48,9 +48,10 @@ export const updateQuestion = async (intitule: string, questionData: Question) =
     }
 }
 
-export const deleteQuestion = async (id: string) => {
+export const deleteQuestion = async (questionId: string, surveyId: string) => {
     try {
-        const question = await getQuestionById(id);
+        const question = await getQuestionById(questionId);
+        const survey = await getSurveyById(surveyId);
 
         const responsesQuestion = await response.findOne({
             _id: question.reponses
@@ -58,8 +59,16 @@ export const deleteQuestion = async (id: string) => {
 
         await deleteReponse(responsesQuestion._id);
 
+        survey.questions.forEach((question: string) => {
+            console.log('question:', question.toString());
+            console.log('questionId:', questionId);
+            if (question.toString() === questionId) {
+                survey.questions.splice(survey.questions.indexOf(question), 1);
+            }
+        });
+
         return await question.deleteOne({
-            _id: id
+            _id: questionId
         });
     } catch (error) {
         console.error('Erreur lors de la suppression de la question :', error);

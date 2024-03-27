@@ -2,7 +2,7 @@ import { type Action, type Actions, redirect } from "@sveltejs/kit";
 import { createUser, getUser } from "../../services/user.service";
 import { generateToken, verifyToken } from "../../utils/token";
 import { env } from "$env/dynamic/private";
-import type { PageServerLoad } from "../../../.svelte-kit/types/src/routes/auth/$types";
+import type { PageServerLoad } from "./$types";
 import { defaultCookiesOptions } from "$lib/helpers/cookie.helper";
 
 type AuthPayload = {

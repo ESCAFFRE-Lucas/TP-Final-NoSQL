@@ -52,7 +52,7 @@
 {/if}
 
 <div class="flex flex-col items-center mb-4">
-    <h2 class="text-xl font-bold mb-2">Utilisateurs</h2>
+    <h2 class="text-xl font-bold mb-2">Autres utilisateurs</h2>
     {#if data.usersData && data.usersData.length > 0}
         <ul>
             {#each data.usersData as user}

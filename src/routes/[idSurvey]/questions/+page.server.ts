@@ -1,8 +1,8 @@
-import type { PageServerLoad } from "../../../../.svelte-kit/types/src/routes/$types";
+import type { PageServerLoad } from "./$types";
 import { env } from "$env/dynamic/private";
 import { verifyToken } from "../../../utils/token";
 import { type Action, type Actions, redirect } from "@sveltejs/kit";
-import { createQuestion, getQuestionById } from "../../../services/question.service";
+import { createQuestion, deleteQuestion, getQuestionById } from "../../../services/question.service";
 import { createReponse } from "../../../services/response.service";
 import { addQuestionToSurvey, getSurveyById } from "../../../services/survey.service";
 
@@ -107,7 +107,18 @@ const makeQuestion: Action = async ({ request, params }) => {
     }
 }
 
+const questionDelete: Action = async ({ request }) => {
+    try {
+        const data = await request.formData();
+        const questionId = data.get('questionId') as string;
+        const surveyId = data.get('surveyId') as string;
+        await deleteQuestion(questionId, surveyId);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
 
 export const actions: Actions = {
-    makeQuestion
+    makeQuestion,
+    questionDelete
 } satisfies Actions;

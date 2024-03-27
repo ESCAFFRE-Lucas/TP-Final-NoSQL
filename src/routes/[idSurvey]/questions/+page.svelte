@@ -6,8 +6,6 @@
 
     export let data: PageServerData;
 
-    console.log(data);
-
     let questionType = 'open';
     let numOptions = 2;
     let surveyId = $page.params.idSurvey;
@@ -93,8 +91,18 @@
                                 <div class="center-wrap">
                                     <div class="section text-center">
                                         {#each data.questionArray as question}
-                                            <a href="/{surveyId}/questions/{question._id}"
-                                               class="btn mt-4 bg-[#ffeba7] w-32 rounded-2xl">{question.intitule}</a>
+                                            <form method="POST" action="/{surveyId}/questions/?/questionDelete" class="flex justify-center">
+                                                <div class="w-32 bg-[#ffeba7] rounded-2xl">
+                                                             <a href="/{surveyId}/questions/{question._id}"
+                                                     class="btn mt-4">{question.intitule}</a>
+                                                </div>
+                                                <input type="hidden" name="questionId" value={question._id}>
+                                                <input type="hidden" name="surveyId" value={surveyId}>
+                                                <button type="submit"
+                                                        class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:bg-red-600">
+                                                    Supprimer
+                                                </button>
+                                            </form>
                                         {/each}
                                     </div>
                                 </div>

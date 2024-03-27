@@ -33,10 +33,10 @@ export const getResponseById = async (id: string) => {
     }
 }
 
-export const updateReponse = async (reponses: string[], reponseData: Reponse) => {
+export const updateReponse = async (id: string, reponseData: Reponse) => {
     try {
-        return await response.findOneAndUpdate({
-            reponses
+        return await response.updateOne({
+            _id: id
         }, reponseData);
     } catch (error) {
         console.error('Erreur lors de la mise à jour de la réponse :', error);
