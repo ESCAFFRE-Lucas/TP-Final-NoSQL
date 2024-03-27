@@ -48,24 +48,16 @@ export const updateQuestion = async (id: string, questionData: Question) => {
     }
 }
 
-export const deleteQuestion = async (questionId: string, surveyId: string) => {
+export const deleteQuestion = async (questionId: string) => {
     try {
-        const question = await getQuestionById(questionId);
-        const survey = await getSurveyById(surveyId);
+        const question = await getQuestionById(questionId.toString());
+        console.log('question:', question.reponses.toString());
 
         const responsesQuestion = await response.findOne({
-            _id: question.reponses
+            _id: question.reponses.toString()
         });
 
         await deleteReponse(responsesQuestion._id);
-
-        survey.questions.forEach((question: string) => {
-            console.log('question:', question.toString());
-            console.log('questionId:', questionId);
-            if (question.toString() === questionId) {
-                survey.questions.splice(survey.questions.indexOf(question), 1);
-            }
-        });
 
         return await question.deleteOne({
             _id: questionId

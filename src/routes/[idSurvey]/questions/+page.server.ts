@@ -111,8 +111,7 @@ const questionDelete: Action = async ({ request }) => {
     try {
         const data = await request.formData();
         const questionId = data.get('questionId') as string;
-        const surveyId = data.get('surveyId') as string;
-        await deleteQuestion(questionId, surveyId);
+        await deleteQuestion(questionId);
     } catch (error) {
         console.error('Error:', error);
     }
