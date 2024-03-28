@@ -46,4 +46,7 @@ docker-compose up
 
 ### Vous pouvez vous déconnecter en cliquant sur le bouton "Déconnexion" en haut à droite de la page d'accueil.
 
+## Feature qui ne fonctionne pas (Si vous voulez tester cela fera crash le serveur et vous devrez enlever les valeurs dans la db directement) :
+- Supprimer une question dans un questionnaire directement (il faut supprimer le questionnaire entier pour supprimer une question)
+
 
